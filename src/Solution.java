@@ -8,48 +8,36 @@ import java.util.Map;
 
 public class Solution {
     public static void main(String[] args) {
-        removeTheFirstNameDuplicates(createMap());
+        removeItemFromMap(createMap());
     }
 
-    public static Map<String, String> createMap() {
-        Map<String, String> map = new HashMap<>(); {
-            map.put("Барнаева", "Валентина");
-            map.put("Захарова", "Надежда");
-            map.put("Петрова", "Зоя");
-            map.put("Сидорова", "Валентина");
-            map.put("Иванова", "Лидия");
-            map.put("Барнаев", "Максим");
-            map.put("Захаров", "Максим");
-            map.put("Петров", "Пётр");
-            map.put("Сидоров", "Сидор");
-            map.put("Иванов", "Иван");}
+    public static Map<String, Integer> createMap() {
+        Map<String, Integer> map = new HashMap<>();
+        {
+            map.put("Барнаева", 500);
+            map.put("Захарова", 550);
+            map.put("Петрова", 450);
+            map.put("Сидорова", 300);
+            map.put("Иванова", 200);
+            map.put("Барнаев", 600);
+            map.put("Захаров", 510);
+            map.put("Петровcкий", 480);
+            map.put("Сидоров", 250);
+            map.put("Иванченко", 499);
+        }
         return map;
     }
 
-    public static void removeTheFirstNameDuplicates(Map<String, String> map) {
-        ArrayList<String> list = new ArrayList<>(); //создаём массив для хранения имён
-        for (Map.Entry<String, String> pair : map.entrySet()) list.add(pair.getValue());//заполняем массив
-        //System.out.println("массив имён заполнен: " + list.toString());
-        String value;
-        System.out.println("Начинаем проверку на повторы");
-        for (int i=0; i< list.size(); i++){
-            String s = list.get(i);
-            for (int k=i; k< list.size()-1; k++){
-                if (s.equals(list.get(k+1))) {value = s;
-                    System.out.println("Найден повтор "+s);
-                    removeItemFromMapByValue(map, value); //
-                }
+    public static void removeItemFromMap(Map<String, Integer> map) {
+        Map<String, Integer> copy = new HashMap<>(map);
+        for (Map.Entry<String, Integer> pair : map.entrySet()) {
+            if (pair.getValue() < 500) {
+                System.out.println("Удаляем нищеброда " + pair);//удаляем запись
+                copy.remove(pair.getKey());
             }
         }
-    }
-
-    public static void removeItemFromMapByValue(Map<String, String> map, String value)
-    {
-        Map<String, String> copy = new HashMap<>(map);
-        for (Map.Entry<String, String> pair : copy.entrySet()) {
-            if (pair.getValue().equals(value)) {
-                System.out.println("Удаляем повтор " + pair);//удаляем повтор
-                map.remove(pair);}
+        System.out.println("Вот что получилось:");
+        for (Map.Entry<String, Integer> pair : copy.entrySet())
+            System.out.println(pair.getKey()+" "+pair.getValue());//печатаем
         }
     }
-}
