@@ -1,39 +1,33 @@
+import java.io.*;
+
 public class Solution {
-    public static void main(String[] args) {
-        method1();
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String sourceFileName = reader.readLine();
+        String destinationFileName = reader.readLine();
+
+        InputStream fileInputStream = getInputStream(sourceFileName);
+        OutputStream fileOutputStream = getOutputStream(destinationFileName);
+
+        int count = 0;
+        while (fileInputStream.available() != 0)
+        {
+            int data = fileInputStream.read();
+            fileOutputStream.write(data);
+            count++;
+        }
+
+        System.out.println("Скопировано байт " + count);
+
+        fileInputStream.close();
+        fileOutputStream.close();
     }
 
-    public static String method1() {
-        method2();
-        String s = Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println("Сообщение от Метода 1: " + s);
-        return s;
+    public static InputStream getInputStream(String sourceFileName) throws IOException {
+        return new FileInputStream(sourceFileName);
     }
 
-    public static String method2() {
-        method3();
-        String s = Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println("Сообщение от Метода 2: " + s);
-        return s;
-    }
-
-    public static String method3() {
-        method4();
-        String s = Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println("Сообщение от Метода 3: " + s);
-        return s;
-    }
-
-    public static String method4() {
-        method5();
-        String s = Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println("Сообщение от Метода 4: " + s);
-        return s;
-    }
-
-    public static String method5() {
-        String s = Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println("Сообщение от Метода 5: " + s);
-        return s;
+    public static OutputStream getOutputStream(String destinationFileName) throws IOException {
+        return new FileOutputStream(destinationFileName);
     }
 }
